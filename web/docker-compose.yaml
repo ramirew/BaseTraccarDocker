@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  traccar:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+    - .env
+    container_name: traccar
+    working_dir: /app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      backend_network:
+      frontend_network:
+        ipv4_address: 172.19.0.10
+    ports:
+      - "3000:3000"
+      
+networks:
+  frontend_network:
+    driver: bridge
+    external: true
+    ipam:
+      config:
+        - subnet: 172.19.0.0/24
+  
+  backend_network:
+    driver: bridge
+    external: true
+    ipam:
+      config:
+        - subnet: 172.18.0.0/24

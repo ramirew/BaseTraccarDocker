@@ -1,0 +1,15 @@
+# Usa una imagen oficial de MongoDB
+FROM mongo:6.0
+
+ARG MONGO_INITDB_ROOT_USERNAME
+ARG MONGO_INITDB_ROOT_PASSWORD
+
+ENV MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+ENV MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+
+COPY ./init/ /docker-entrypoint-initdb.d/
+
+EXPOSE 27017
+
+# Comando de inicio del contenedor
+CMD ["mongod"]
